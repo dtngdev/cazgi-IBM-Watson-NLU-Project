@@ -57,6 +57,10 @@ class App extends React.Component {
         output = <div style={{color:"yellow",fontSize:20}}>{response.data}</div>
       }
       this.setState({sentimentOutput:output});
+    }).catch((err)=>{
+      this.setState({
+          sentimentOutput: <div style={{color:"red",fontSize:20}}>Error: {err.response && err.response.data && err.response.data.error ? err.response.data.error:err.message}</div>
+      });
     });
   }
 
@@ -72,12 +76,10 @@ class App extends React.Component {
     ret = axios.get(url);
 
     ret.then((response)=>{
-        console.log(response);
       this.setState({sentimentOutput:<EmotionTable emotions={response.data}/>});
-  }).catch(err=>{
-      console.log(err.response);
+  }).catch((err)=>{
       this.setState({
-          sentimentOutput: <div>{err.response.data}</div>
+          sentimentOutput: <div style={{color:"red",fontSize:20}}>Error: {err.response && err.response.data && err.response.data.error ? err.response.data.error:err.message}</div>
       });
   });
   }
