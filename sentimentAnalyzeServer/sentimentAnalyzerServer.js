@@ -20,9 +20,8 @@ app.get("/url/emotion", (req,res) => {
     const analyzeParams = {
         url: req.query.url,
         features: {
-            entities: {
-                emotion: true,
-                limit: 1
+            emotion:{
+                document: true
             }
         }
     };
@@ -34,9 +33,8 @@ app.get("/url/sentiment", (req,res) => {
     const analyzeParams = {
         url: req.query.url,
         features: {
-            entities: {
-                sentiment: true,
-                limit: 1
+            sentiment:{
+                document: true
             }
         }
     };
@@ -48,9 +46,8 @@ app.get("/text/emotion", (req,res) => {
     const analyzeParams = {
         text: req.query.text,
         features: {
-            entities: {
-                emotion: true,
-                limit: 1
+            emotion:{
+                document: true
             }
         }
     };
@@ -62,9 +59,8 @@ app.get("/text/sentiment", (req,res) => {
     const analyzeParams = {
         text: req.query.text,
         features: {
-            entities: {
-                sentiment: true,
-                limit: 1
+            sentiment:{
+                document: true
             }
         }
     };
@@ -94,7 +90,7 @@ const sendAnalyseEmotionResponse = (res,nlu,params)=>{
         .then(analysisResults => {
             console.log(JSON.stringify(analysisResults));
             try{
-                const emotion = analysisResults.result.entities[0].emotion;
+                const emotion = analysisResults.result.emotion.document.emotion;
                 return res.send(emotion);
             }
             catch (err){
@@ -110,9 +106,9 @@ const sendAnalyseEmotionResponse = (res,nlu,params)=>{
 const sendAnalyseSentimentResponse = (res,nlu,params)=>{
     nlu.analyze(params)
         .then(analysisResults => {
-            console.log(JSON.stringify(analysisResults.result.entities));
+            console.log(JSON.stringify(analysisResults.result));
             try{
-                const label = analysisResults.result.entities[0].sentiment.label;
+                const label = analysisResults.result.sentiment.document.label;
                 return res.send(label);
             }
             catch (err){

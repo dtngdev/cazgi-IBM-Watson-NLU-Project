@@ -77,7 +77,7 @@ class App extends React.Component {
   }).catch(err=>{
       console.log(err.response);
       this.setState({
-          sentimentOutput: <div>{err.response.error}</div>
+          sentimentOutput: <div>{err.response.data}</div>
       });
   });
   }
